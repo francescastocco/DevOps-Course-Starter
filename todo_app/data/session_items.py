@@ -67,3 +67,18 @@ def save_item(item):
     session['items'] = updated_items
 
     return item
+
+
+def delete_item(index):
+    """
+    Deletes an item by index in the item list
+
+    Args:
+        index: The item index in the list of items.
+    """
+    existing_items = get_items()
+    existing_items.pop(index)
+    
+    session['items'] = existing_items
+
+    return existing_items
