@@ -23,11 +23,22 @@ def get_all_cards():
 
 def create_card(title):
     base_url = 'https://api.trello.com/1/cards'
-    card = {
+    query_params = {
         "key": {os.getenv("API_KEY")},
         "token": {os.getenv("API_TOKEN")},
         "name": title,
         "idList": {os.getenv("TO_DO_LIST_ID")}
     }
-    response = requests.post(base_url, data=card)
+    response = requests.post(base_url, data = query_params)
+    response.raise_for_status()
+
+def update_card_status(id, status):
+    base_url = f'https://api.trello.com/1/card/{id}'
+    list_id = {os.getenv("DONE_LSIT_ID")}
+    query_params = {
+        "key": {os.getenv("API_KEY")},
+        "token": {os.getenv("API_TOKEN")},
+        "idList": list_id
+    }
+    response = requests.put(base_url, data = query_params)
     response.raise_for_status()
