@@ -16,20 +16,18 @@
           <th>Status</th>
           <th>Update Status</th>
         </tr>
-        {% for list in lists %}
-        {% for card in list.cards %}
+        {% for card in cards %}
         <form action='/update' method='post'>
           <tr>
           <td>{{card.name}}</td>
-          <td>{{list.name}}</td>
+          <td>{{card.status}}</td>
           <td>
             <input type='hidden' name='card-id' value={{card.id}}>
-            <input type='hidden' name='card-status' value={{card.idList}}>
+            <input type='hidden' name='card-status' value={{card.list_id}}>
             <button type='submit' value='Submit'>Update Status</button>
           </td>
         </tr>  
         </form>
-        {% endfor %}
         {% endfor %}
       </table>
     </div>

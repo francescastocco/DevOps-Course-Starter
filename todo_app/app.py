@@ -11,8 +11,7 @@ app.config.from_object(Config())
 
 @app.route('/')
 def index():
-    data = get_all_cards()
-    return render_template('index.html', lists=data)
+    return render_template('index.html', cards=get_all_cards())
 
 @app.route('/create', methods = ['POST'])
 def create():

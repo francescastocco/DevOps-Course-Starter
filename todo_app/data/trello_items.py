@@ -1,5 +1,6 @@
 import os
 import requests
+from todo_app.data.card import Card
 
 
 def get_all_cards():
@@ -10,7 +11,11 @@ def get_all_cards():
         'cards': 'open'
     }
     response = requests.get(base_url, params = query_params)
-    return response.json()
+    return [
+        Card.from_trello_card(card, list)
+        for list in response.json()
+        for card in list['cards']
+    ]
 
 def create_card(title):
     base_url = 'https://api.trello.com/1/cards'
