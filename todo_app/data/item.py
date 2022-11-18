@@ -1,7 +1,4 @@
-from pydoc import describe
-
-
-class Card:
+class Item:
     def __init__(self, id, name, list_id, status='To Do'):
         self.id = id
         self.name = name
