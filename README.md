@@ -53,6 +53,14 @@ You should see output similar to the following:
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
+## Running the App in a VM
+
+To Provision a VM from an Ansible Control Node:
+
+- SSH into the control node
+- Run `ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory`
+- Visit `http://host.ip.address:5000/` in your browser to view the app
+
 ## Running Tests
 
 To run the test suite in VS code, you need to set up the virtual environment. Press `Cmd/Ctrl + Shift + P` and select `Python: Select Interpreter`. Select the Python executable in the new `.venv` directory, which is `./.venv/Scripts/python.exe` on Windows.
