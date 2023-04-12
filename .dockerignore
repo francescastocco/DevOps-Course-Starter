@@ -1,0 +1,6 @@
+Dockerfile
+.env
+.gitignore
+.venv
+.vscode
+ansible

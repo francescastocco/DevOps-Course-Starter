@@ -34,7 +34,7 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
-## Running the App
+## Running the App locally
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
 ```bash
@@ -52,6 +52,34 @@ You should see output similar to the following:
  * Debugger PIN: 226-556-590
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
+
+## Running the App in a Docker Container - Development
+
+To create the image, run the command:
+```
+docker build --target development --tag todo-app:dev .
+```
+
+To run the container, run:
+```
+docker run --env-file ./.env --publish 8000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
+```
+
+Now visit [`http://localhost:8000/`](http://localhost:8000/) in your web browser to view the app.
+
+## Running the App in a Docker Container - Production
+
+To create the image, run the command:
+```
+docker build --target production --tag todo-app:prod .
+```
+
+To run the container, run:
+```
+docker run -p 8000:8000 --env-file ./.env todo-app:prod
+```
+
+Now visit [`http://localhost:8000/`](http://localhost:8000/) in your web browser to view the app.
 
 ## Running the App in a VM
 

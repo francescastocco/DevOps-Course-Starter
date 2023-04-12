@@ -10,10 +10,10 @@ def get_all_items():
         'token': {os.getenv('API_TOKEN')},
         'cards': 'open'
     }
-    response = requests.get(base_url, params = query_params)
+    response = requests.get(base_url, params = query_params).json()
     return [
         Item.from_trello_card(card, list)
-        for list in response.json()
+        for list in response
         for card in list['cards']
     ]
 
