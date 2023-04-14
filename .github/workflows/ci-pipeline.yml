@@ -1,0 +1,22 @@
+name: Continuous Integration
+on:
+  push:
+    paths-ignore:
+      - '**/*.md'
+  pull_request:
+    branches:
+      - main
+    paths-ignore:
+      - '**/*.md'
+
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build test docker image
+      run: docker build --target test --tag todo-app:test .
+    - name: Run tests
+      run: docker run todo-app:test
