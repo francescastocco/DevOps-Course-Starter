@@ -39,7 +39,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: todo-app:latest,todo-app:$GITHUB_SHA
+        tags: todo-app:latest,todo-app:${{ vars.GITHUB_SHA }}
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Deploy to Azure
