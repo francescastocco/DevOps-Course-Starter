@@ -34,7 +34,13 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Build docker image
-      run: docker build --target production --tag ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ vars.GITHUB_SHA }} .
-    - name: Push image to Dockerhub
-      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ vars.GITHUB_SHA }}
+    - name: Build and push docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: todo-app:latest,todo-app:$GITHUB_SHA
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Deploy to Azure
+      run: curl -dH -X POST '${{ secrets.AZURE_WEBHOOK }}'
