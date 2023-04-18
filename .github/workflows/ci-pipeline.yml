@@ -40,8 +40,8 @@ jobs:
         context: .
         push: true
         target: production
-        tags: 
-        - ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
-        - ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ github.sha }}
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ github.sha }}
     - name: Deploy to Azure
       run: curl -dH --fail -X POST '${{ secrets.AZURE_WEBHOOK }}'
