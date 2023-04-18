@@ -20,3 +20,28 @@ jobs:
       run: docker build --target test --tag todo-app:test .
     - name: Run tests
       run: docker run todo-app:test
+
+  deploy:
+    name: Push image to Dockerhub
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+    - name: Login to Dockerhub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Build and push docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        target: production
+        tags: |
+          ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:latest
+          ${{ secrets.DOCKERHUB_USERNAME }}/todo-app:${{ github.sha }}
+    - name: Deploy to Azure
+      run: curl -dH --fail -X POST '${{ secrets.AZURE_WEBHOOK }}'
