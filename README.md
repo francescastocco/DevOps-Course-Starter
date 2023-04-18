@@ -34,7 +34,9 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
-## Running the App locally
+## Running the App 
+
+### Running locally
 
 Once the all dependencies have been installed, start the Flask app in development mode within the Poetry environment by running:
 ```bash
@@ -53,7 +55,7 @@ You should see output similar to the following:
 ```
 Now visit [`http://localhost:5000/`](http://localhost:5000/) in your web browser to view the app.
 
-## Running the App in a Docker Container - Development
+### Running in a Docker Container - Development
 
 To create the image, run the command:
 ```
@@ -62,12 +64,12 @@ docker build --target development --tag todo-app:dev .
 
 To run the container, run:
 ```
-docker run --env-file ./.env --publish 8000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app todo-app:dev
+docker run --env-file ./.env --publish 8000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app -it todo-app:dev
 ```
 
 Now visit [`http://localhost:8000/`](http://localhost:8000/) in your web browser to view the app.
 
-## Running the App in a Docker Container - Production
+### Running in a Docker Container - Production
 
 To create the image, run the command:
 ```
@@ -76,24 +78,49 @@ docker build --target production --tag todo-app:prod .
 
 To run the container, run:
 ```
-docker run -p 8000:8000 --env-file ./.env todo-app:prod
+docker run -p 8000:8000 --env-file ./.env -it todo-app:prod
 ```
 
 Now visit [`http://localhost:8000/`](http://localhost:8000/) in your web browser to view the app.
 
-## Running the App in a VM
+### Running in a VM
 
 To Provision a VM from an Ansible Control Node:
 
 - SSH into the control node
-- Run `ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory`
+- Run:
+```
+ansible-playbook my-ansible-playbook.yml -i my-ansible-inventory
+```
+
 - Visit `http://host.ip.address:5000/` in your browser to view the app
 
-## Running Tests
+
+## Running the Tests
+
+### Running locally
+
+To run the tests (integration and unit), use the command 
+```
+poetry run pytest tests
+``` 
+in the DevOps-Course-Starter directory. This will search the "tests" directory for files starting in `test_` or ending in `_test`. Inside those files, any function starting with `test_` will be considered a test.
+
+### Running in a Docker Container
+
+To create the image, run the command:
+```
+docker build --target test --tag todo-app:test .
+```
+
+To run the tests, run:
+```
+docker run todo-app:test
+```
+
+### Running in a VM
 
 To run the test suite in VS code, you need to set up the virtual environment. Press `Cmd/Ctrl + Shift + P` and select `Python: Select Interpreter`. Select the Python executable in the new `.venv` directory, which is `./.venv/Scripts/python.exe` on Windows.
-
-To run the tests (integration and unit), use the command `poetry run pytest tests` in the DevOps-Course-Starter directory. This will search the "tests" directory for files starting in `test_` or ending in `_test`. Inside those files, any function starting with `test_` will be considered a test.
 
 ## Dockerhub
 ### Push Docker image to Dockerhub
