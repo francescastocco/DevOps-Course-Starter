@@ -121,3 +121,38 @@ docker run todo-app:test
 ### Running in a VM
 
 To run the test suite in VS code, you need to set up the virtual environment. Press `Cmd/Ctrl + Shift + P` and select `Python: Select Interpreter`. Select the Python executable in the new `.venv` directory, which is `./.venv/Scripts/python.exe` on Windows.
+
+## Dockerhub
+### Push Docker image to Dockerhub
+
+Login to DockerHub locally using:
+```
+docker login
+```
+Build the image using
+```
+docker build --target production --tag <image-tag> .
+```
+Push the image using
+```
+docker push <image-tag>
+```
+where `<image-tag>` has the format `<username>/<image_name>:<tag>`.
+
+### Pull Docker image from Dockerhub
+
+The production image is stored in Dockerhub [here](https://hub.docker.com/repository/docker/frasto/todo-app/general)
+Run the following command to pull the image from Dockerhub:
+```
+docker pull frasto/todo-app:prod
+```
+
+## Hosting on Azure Web App
+
+The app is hosted at [`http://frasto-todo-app.azurewebsites.net/`](http://frasto-todo-app.azurewebsites.net/)
+
+### Updating the container
+
+Post requests to the webhook URL set up by the Azure App Service will restart and pull the latest version of the container image from Dockerhub, to do this:
+- Find the webhook URL in the Deployment Center in the Azure portal.
+- Run the command `curl -dH -X POST "<webhook>"` escaping the dollar sign with a backslack, eg. `\$`
