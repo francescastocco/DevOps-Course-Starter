@@ -1,10 +1,13 @@
 class Item:
-    def __init__(self, id, name, list_id, status='To Do'):
+    def __init__(self, id, name, status='To Do'):
         self.id = id
         self.name = name
-        self.list_id = list_id
         self.status = status
 
     @classmethod
     def from_trello_card(cls, card, list):
-        return cls(card['id'], card['name'], list['id'], list['name'])
+        return cls(card['id'], card['name'], list['name'])
+    
+    @classmethod
+    def from_database(cls, item):
+        return cls(item['_id'], item['name'], item['status'])

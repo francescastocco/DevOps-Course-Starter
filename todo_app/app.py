@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
-from todo_app.data.trello_items import get_all_items, create_item, update_item_status
+from todo_app.data.database_client import create_item, delete_item, get_all_items, update_item_status
 from todo_app.flask_config import Config
 from todo_app.view_models.items_view_model import ItemsViewModel
 
@@ -23,6 +23,12 @@ def create_app():
         item_id = request.form.get('item-id')
         item_status = request.form.get('item-status')
         update_item_status(item_id, item_status)
+        return redirect(url_for('index'))
+    
+    @app.route('/delete', methods = ['POST'])
+    def delete():
+        item_id = request.form.get('item-id')
+        delete_item(item_id)
         return redirect(url_for('index'))
 
     return app
