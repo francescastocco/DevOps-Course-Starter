@@ -3,37 +3,34 @@ import pymongo
 
 from todo_app.data.item import Item
 
-def get_db():
+def get_collection():
     client = pymongo.MongoClient(f'{os.getenv("DATABASE_CONNECTION_STRING")}')
-    return client[f'{os.getenv("DATABASE_NAME")}']
+    db = client[f'{os.getenv("DATABASE_NAME")}']
+    return db.items
 
 def get_all_items():
-    db = get_db()
-    collection =  db.items
+    collection = get_collection()
     items = []
     for item in collection.find():
         items.append(Item.from_database(item))
     return items
 
 def create_item(title):
-    db = get_db()
-    items = db.items
+    collection = get_collection()
     item = {
         "name": title,
         "status": "To Do"
     }
-    items.insert_one(item).inserted_id
+    collection.insert_one(item).inserted_id
 
 def update_item_status(item_id, item_status):
-    db = get_db()
-    items = db.items
+    collection = get_collection()
     new_status = get_next_status(item_status)
-    items.update_one({'_id': item_id}, {'$set': {'status': new_status}})
+    collection.update_one({'_id': item_id}, {'$set': {'status': new_status}})
 
 def delete_item(item_id):
-    db = get_db()
-    items = db.items
-    items.delete_one({'_id': item_id})
+    collection = get_collection()
+    collection.delete_one({'_id': item_id})
 
 def get_next_status(item_status):
     print(item_status)
