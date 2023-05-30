@@ -2,9 +2,9 @@ import pytest
 from todo_app.view_models.items_view_model import ItemsViewModel
 from todo_app.data.item import Item
 
-item_1 = Item(1, "Item 1", 1, "To Do")
-item_2 = Item(2, "Item 2", 2, "Doing")
-item_3 = Item(3, "Item 3", 3, "Done")
+item_1 = Item(1, "Item 1", "To Do")
+item_2 = Item(2, "Item 2", "Doing")
+item_3 = Item(3, "Item 3", "Done")
 
 @pytest.fixture
 def items_view_model():

@@ -34,6 +34,9 @@ $ cp .env.template .env  # (first time only)
 
 The `.env` file is used by flask to set environment variables when running `flask run`. This enables things like development mode (which also enables features like hot reloading when you make a file change). There's also a [SECRET_KEY](https://flask.palletsprojects.com/en/1.1.x/config/#SECRET_KEY) variable which is used to encrypt the flask session cookie.
 
+## Database
+
+All instances of the app use Azure's CosmosDB, a [MongoDB](https://www.mongodb.com/)-compatible database.
 ## Running the App 
 
 ### Running locally
@@ -141,10 +144,10 @@ where `<image-tag>` has the format `<username>/<image_name>:<tag>`.
 
 ### Pull Docker image from Dockerhub
 
-The production image is stored in Dockerhub [here](https://hub.docker.com/repository/docker/frasto/todo-app/general)
+The production image is stored in Dockerhub [here](https://hub.docker.com/repository/docker/frasto/todo-app/general).
 Run the following command to pull the image from Dockerhub:
 ```
-docker pull frasto/todo-app:prod
+docker pull frasto/todo-app:latest
 ```
 
 ## Hosting on Azure Web App
@@ -155,4 +158,4 @@ The app is hosted at [`http://frasto-todo-app.azurewebsites.net/`](http://frasto
 
 Post requests to the webhook URL set up by the Azure App Service will restart and pull the latest version of the container image from Dockerhub, to do this:
 - Find the webhook URL in the Deployment Center in the Azure portal.
-- Run the command `curl -dH -X POST "<webhook>"` escaping the dollar sign with a backslack, eg. `\$`
+- Run the command `curl -dH -X POST "<webhook>"` escaping the dollar sign with a backslash, eg. `\$`

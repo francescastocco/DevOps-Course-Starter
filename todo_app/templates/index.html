@@ -2,72 +2,90 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
-  <div class='jumbotron'>
-    <h1 class='display-4'>To-Do App</h1>
-    <p class='lead'>Not just any other to-do app</p>
-  </div>
+<div class='jumbotron'>
+  <h1 class='display-4'>To-Do App</h1>
+  <p class='lead'>Not just any other to-do app</p>
+</div>
 
-  <div class='row'>
-    <div class='col-md-12'>
-      <h2>Tasks</h2>
-      <table>
-        <tr>
-          <th>Task - To Do</th>
-          <th></th>
-        </tr>
-        {% for item in view_model.to_do_items %}
+<div class='row'>
+  <div class='col-md-12'>
+    <h2>Tasks</h2>
+    <table>
+      <tr>
+        <th>Task - To Do</th>
+        <th></th>
+      </tr>
+      {% for item in view_model.to_do_items %}
+      <tr>
+        <td>{{item.name}}</td>
         <form action='/update' method='post'>
-          <tr>
-          <td>{{item.name}}</td>
           <td>
             <input type='hidden' name='item-id' value={{item.id}}>
-            <input type='hidden' name='item-status' value={{item.list_id}}>
+            <input type='hidden' name='item-status' value={{item.status}}>
             <button type='submit' value='Submit'>Update Status</button>
           </td>
-        </tr>  
         </form>
-        {% endfor %}
-      </table>
-      <table>
-        <tr>
-          <th>Task - Doing</th>
-          <th></th>
-        </tr>
-        {% for item in view_model.doing_items %}
-        <form action='/update' method='post'>
-          <tr>
-          <td>{{item.name}}</td>
+        <form action='/delete' method='post'>
           <td>
             <input type='hidden' name='item-id' value={{item.id}}>
-            <input type='hidden' name='item-status' value={{item.list_id}}>
+            <button type='submit' value='Submit'>Delete Task</button>
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </table>
+    <table>
+      <tr>
+        <th>Task - Doing</th>
+        <th></th>
+      </tr>
+      {% for item in view_model.doing_items %}
+      <tr>
+        <td>{{item.name}}</td>
+        <form action='/update' method='post'>
+          <td>
+            <input type='hidden' name='item-id' value={{item.id}}>
+            <input type='hidden' name='item-status' value={{item.status}}>
             <button type='submit' value='Submit'>Update Status</button>
           </td>
-        </tr>  
         </form>
-        {% endfor %}
-      </table>
-      <table>
-        <tr>
-          <th>Task - Done</th>
-        </tr>
-        {% for item in view_model.done_items %}
-          <tr>
-          <td>{{item.name}}</td>
-        </tr>  
-        {% endfor %}
-      </table>
-    </div>
+        <form action='/delete' method='post'>
+          <td>
+            <input type='hidden' name='item-id' value={{item.id}}>
+            <button type='submit' value='Submit'>Delete Task</button>
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </table>
+    <table>
+      <tr>
+        <th>Task - Done</th>
+      </tr>
+      {% for item in view_model.done_items %}
+      <tr>
+        <td>{{item.name}}</td>
+        <form action='/delete' method='post'>
+          <td>
+            <input type='hidden' name='item-id' value={{item.id}}>
+            <button type='submit' value='Submit'>Delete Task</button>
+          </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </table>
   </div>
+</div>
 
-  <br/>
-  <div class='row'>
-    <div class='col-md-12'>
-      <h2>Add New Task</h2>
-      <form action='/create' method='post'>
-        <label for='item'>Task title:</label>
-        <input type='text' name='item-title' id='item-title' required>
-        <input type='submit' value='Submit'>
-      </form>
-    </div>
+<br />
+<div class='row'>
+  <div class='col-md-12'>
+    <h2>Add New Task</h2>
+    <form action='/create' method='post'>
+      <label for='item'>Task title:</label>
+      <input type='text' name='item-title' id='item-title' required>
+      <input type='submit' value='Submit'>
+    </form>
   </div>
+</div>
 {% endblock %}
