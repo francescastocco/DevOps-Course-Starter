@@ -18,6 +18,7 @@
       {% for item in view_model.to_do_items %}
       <tr>
         <td>{{item.name}}</td>
+        {% if view_model.user.has_write_access %}
         <form action='/update' method='post'>
           <td>
             <input type='hidden' name='item-id' value={{item.id}}>
@@ -31,6 +32,7 @@
             <button type='submit' value='Submit'>Delete Task</button>
           </td>
         </form>
+        {% endif %}
       </tr>
       {% endfor %}
     </table>
@@ -42,6 +44,7 @@
       {% for item in view_model.doing_items %}
       <tr>
         <td>{{item.name}}</td>
+        {% if view_model.user.has_write_access %}
         <form action='/update' method='post'>
           <td>
             <input type='hidden' name='item-id' value={{item.id}}>
@@ -55,6 +58,7 @@
             <button type='submit' value='Submit'>Delete Task</button>
           </td>
         </form>
+        {% endif %}
       </tr>
       {% endfor %}
     </table>
@@ -65,12 +69,14 @@
       {% for item in view_model.done_items %}
       <tr>
         <td>{{item.name}}</td>
+        {% if view_model.user.has_write_access %}
         <form action='/delete' method='post'>
           <td>
             <input type='hidden' name='item-id' value={{item.id}}>
             <button type='submit' value='Submit'>Delete Task</button>
           </td>
         </form>
+        {% endif %}
       </tr>
       {% endfor %}
     </table>
@@ -78,6 +84,7 @@
 </div>
 
 <br />
+{% if view_model.user.has_write_access %}
 <div class='row'>
   <div class='col-md-12'>
     <h2>Add New Task</h2>
@@ -88,4 +95,5 @@
     </form>
   </div>
 </div>
+{% endif %}
 {% endblock %}
