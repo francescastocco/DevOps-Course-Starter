@@ -1,10 +1,15 @@
 class ItemsViewModel:
-    def __init__(self, items):
+    def __init__(self, items, user):
         self._items = items
+        self._user = user
     
     @property
     def items(self):
         return self._items
+    
+    @property
+    def user(self):
+        return self._user
 
     @property
     def to_do_items(self):

@@ -158,4 +158,15 @@ The app is hosted at [`http://frasto-todo-app.azurewebsites.net/`](http://frasto
 
 Post requests to the webhook URL set up by the Azure App Service will restart and pull the latest version of the container image from Dockerhub, to do this:
 - Find the webhook URL in the Deployment Center in the Azure portal.
-- Run the command `curl -dH -X POST "<webhook>"` escaping the dollar sign with a backslash, eg. `\$`
+- Run the command `curl -dH --fail -X POST "<webhook>"` escaping the dollar sign with a backslash, eg. `\$`
+
+
+## Authentication and Authorisation
+
+### Authentication
+
+The app is a registered GitHub OAuth app, so will redirect to GitHub for initial login.
+
+### Authorisation
+
+Users will have read-access by default unless their GitHub ID is stored in Azure as an environment variable called `ADMIN_USER_ID`, this user has write access allowing the user to create, update and delete items.

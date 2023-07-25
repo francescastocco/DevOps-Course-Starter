@@ -1,7 +1,7 @@
 import os
 import pymongo
 
-from todo_app.data.item import Item
+from todo_app.data.classes.item import Item
 
 def get_collection():
     client = pymongo.MongoClient(f'{os.getenv("DATABASE_CONNECTION_STRING")}')
